@@ -1,8 +1,11 @@
 console.log(localStorage)
-
+document.getElementById("next2").style.display = "none";
+document.getElementById("next3").style.display = "none";
 pos1 = []
 pos2 = []
 pos3 = []
+
+current_phrase = ""
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -19,12 +22,6 @@ document.getElementById('inputfile')
         } 
         fr.readAsText(this.files[0]); 
     }) 
-
-function wordStuff() {
-    var input = document.getElementById("phrase").value
-    console.log("This: " + input)
-    loadFile("test1.txt")
-}
 
 function loadFile(filePath) {
     var result = null;
@@ -63,6 +60,7 @@ function pickWord(file_name) {
 }
 
 function parseText() {
+  reset_visibility()
   var text = document.getElementById("phrase").value
   texts = text.split("+")
   pos1 = new Array(texts.length)
@@ -76,15 +74,40 @@ function parseText() {
   }
   displayResult1()
 }
-function displayResult1() {
-  var target = document.getElementById("phrase")
-  var result = pos1.join("")
-  console.log(result)
-  displayResult(result)
+
+function reset_visibility() {
+  document.getElementById("next2").style.display = "none";
+  document.getElementById("next3").style.display = "none";
+  document.getElementById("output").innerHTML=""
+  document.getElementById("output2").innerHTML=""
+  document.getElementById("output3").innerHTML=""
 }
 
-function displayResult(result) {
-  console.log("should work")
+
+function displayResult1() {
+  var result = pos1.join("")
+  console.log(result)
   e = document.getElementById("output")
   e.innerHTML=result
+  document.getElementById("next2").style.display = "block";
+}
+
+function displayResult2() {
+  var old_result = pos1.join(" ")
+  e = document.getElementById("output")
+  e.innerHTML=old_result
+  
+  var result = pos2.join(" ")
+  e = document.getElementById("output2")
+  e.innerHTML=result
+  document.getElementById("next3").style.display = "block";
+  document.getElementById("next2").style.display = "None";
+}
+
+function displayResult3() {
+  var result = pos3.join(" ")
+  e = document.getElementById("output3")
+  e.innerHTML=result
+  document.getElementById("next2").style.display = "none";
+  document.getElementById("next3").style.display = "none";
 }

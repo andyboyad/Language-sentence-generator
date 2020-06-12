@@ -1,5 +1,8 @@
 console.log(localStorage)
 
+pos1 = []
+pos2 = []
+pos3 = []
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -10,8 +13,8 @@ document.getElementById('inputfile')
         var fr=new FileReader(); 
         var f = this.files[0]
         fr.onload=function(){ 
-            document.getElementById('output') 
-                    .textContent=fr.result; 
+            //document.getElementById('output') 
+            //        .textContent=fr.result; 
             setLocalStorage(f.name, fr.result)
         } 
         fr.readAsText(this.files[0]); 
@@ -35,6 +38,7 @@ function loadFile(filePath) {
   }
 
 function setLocalStorage(file_name, text) {
+  file_name = file_name.split(".")[0]
   counter=0
   text=text.split("\n")
   console.log(text)
@@ -56,4 +60,31 @@ function pickWord(file_name) {
   var word = JSON.parse(localStorage.getItem(file_name + " " + word_num))
   console.log(word)
   return word
+}
+
+function parseText() {
+  var text = document.getElementById("phrase").value
+  texts = text.split("+")
+  pos1 = new Array(texts.length)
+  pos2 = new Array(texts.length)
+  pos3 = new Array(texts.length)
+  for(var s in texts) {
+    list = pickWord(texts[s])
+    pos1[s] = list[0]
+    pos2[s] = list[1]
+    pos3[s] = list[2]
+  }
+  displayResult1()
+}
+function displayResult1() {
+  var target = document.getElementById("phrase")
+  var result = pos1.join("")
+  console.log(result)
+  displayResult(result)
+}
+
+function displayResult(result) {
+  console.log("should work")
+  e = document.getElementById("output")
+  e.innerHTML=result
 }
